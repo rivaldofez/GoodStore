@@ -40,8 +40,21 @@ struct ContentView: View {
                 }
                 
                 Spacer()
+                
+                List{
+                    ForEach(vm.items, id: \.recordId){ item in
+                        HStack {
+                            Text(item.title)
+                            Spacer()
+                            Text("$" + String(describing: item.price))
+                        }
+                    }
+                }
                     .navigationTitle("Good Store")
             }.padding()
+                .onAppear{
+                    vm.populateItems()
+                }
         }
     }
 }

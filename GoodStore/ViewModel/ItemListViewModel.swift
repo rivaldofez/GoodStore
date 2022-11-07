@@ -64,7 +64,9 @@ class ItemListViewModel: ObservableObject {
                                 print(error)
                             }
                         }
+                DispatchQueue.main.async {
                     self.items = items.map(ItemViewModel.init)
+                }
                 case .failure(let error):
                     print(error)
             }
