@@ -40,4 +40,47 @@ class ItemListViewModel: ObservableObject {
             
         }
     }
+    
+    func populateItems() {
+        let query = CKQuery(recordType: RecordType.itemListing.rawValue, predicate: NSPredicate(value: true))
+        var items: [ItemListing] = []
+        
+        database.fetch(withQuery: query, completionHandler: { result in
+            switch result {
+                case .success(let result):
+                    print(result.matchResults)
+                    result.matchResults.compactMap{$0.1}
+                        .forEach {
+                            switch $0 {
+                            case .success(let record):
+                                if let itemListing = ItemListing.fromRecord(record){
+                                    items.append(itemListing)
+                                }
+                                
+                                print(record)
+                            case .failure(let error):
+                                print(error)
+                            }
+                        }
+                case .failure(let error):
+                    print(error)
+            }
+        })
+    }
+}
+
+struct ItemViewModel {
+    let itemListing: ItemListing
+    
+    var recordId: CKRecord.ID? {
+        itemListing.recordId
+    }
+    
+    var title: String {
+        itemListing.title
+    }
+    
+    var price: Decimal {
+        itemListing.price
+    }
 }

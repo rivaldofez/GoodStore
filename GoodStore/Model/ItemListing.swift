@@ -24,4 +24,12 @@ struct ItemListing{
         return ["title": title, "price": price]
     }
     
+    static func fromRecord(_ record: CKRecord) -> ItemListing? {
+        guard let title = record.value(forKey: "title") as? String, let price = record.value(forKey: "price") as? Double else {
+            return nil
+        }
+        
+        return ItemListing(recordId: record.recordID, title: title, price: Decimal(price))
+    }
+    
 }
