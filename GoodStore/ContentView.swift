@@ -37,7 +37,7 @@ struct ContentView: View {
                     self.title = ""
                     self.price = ""
                     
-                }
+                }.disabled(title.trimmingCharacters(in: .whitespaces).isEmpty || price.trimmingCharacters(in: .whitespaces).isEmpty)
                 
                 Spacer()
                 

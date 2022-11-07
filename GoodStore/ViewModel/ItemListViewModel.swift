@@ -35,8 +35,12 @@ class ItemListViewModel: ObservableObject {
             if let error = error{
                 print(error)
             }else{
-                if let _ = newRecord{
-                    print("SAVED")
+                if let newRecord = newRecord{
+                    if let itemListing = ItemListing.fromRecord(newRecord){
+                        DispatchQueue.main.async {
+                            self.items.append(ItemViewModel(itemListing: itemListing))
+                        }
+                    }
                 }
             }
             
