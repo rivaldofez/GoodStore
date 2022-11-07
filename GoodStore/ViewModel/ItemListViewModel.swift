@@ -18,6 +18,8 @@ class ItemListViewModel: ObservableObject {
     private var database: CKDatabase
     private var container: CKContainer
     
+    @Published var items: [ItemViewModel] = []
+    
     init(container: CKContainer){
         self.container = container
         self.database = self.container.publicCloudDatabase
@@ -62,6 +64,7 @@ class ItemListViewModel: ObservableObject {
                                 print(error)
                             }
                         }
+                    self.items = items.map(ItemViewModel.init)
                 case .failure(let error):
                     print(error)
             }
